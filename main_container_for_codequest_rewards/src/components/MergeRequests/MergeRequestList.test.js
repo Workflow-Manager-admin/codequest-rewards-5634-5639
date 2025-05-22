@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import MergeRequestList from './MergeRequestList';
 import { AppProvider } from '../../context/AppContext';
@@ -18,8 +18,8 @@ const renderWithProviders = (component) => {
 describe('MergeRequestList Component', () => {
   test('renders merge request header', () => {
     renderWithProviders(<MergeRequestList />);
-    const headerElement = screen.getByText(/Merge Requests/i);
-    expect(headerElement).toBeInTheDocument();
+    const headerElements = screen.getAllByText(/Merge Requests/i);
+    expect(headerElements[0]).toBeInTheDocument();
     
     const subtitleElement = screen.getByText(/Review and track bugs found/i);
     expect(subtitleElement).toBeInTheDocument();
@@ -28,15 +28,19 @@ describe('MergeRequestList Component', () => {
   test('renders filter options', () => {
     renderWithProviders(<MergeRequestList />);
     
-    const allFilter = screen.getByText('All');
-    expect(allFilter).toBeInTheDocument();
-    expect(allFilter).toHaveClass('active'); // Default selection
+    // Find the filter group section first
+    const filterSection = screen.getByText('Status:').closest('.filters');
     
-    const openFilter = screen.getByText('Open');
-    expect(openFilter).toBeInTheDocument();
+    // Get filter buttons within this section
+    const allFilterButtons = within(filterSection).getAllByText('All');
+    expect(allFilterButtons[0]).toBeInTheDocument();
+    expect(allFilterButtons[0]).toHaveClass('active'); // Default selection
     
-    const mergedFilter = screen.getByText('Merged');
-    expect(mergedFilter).toBeInTheDocument();
+    const openFilterButtons = within(filterSection).getAllByText('Open');
+    expect(openFilterButtons[0]).toBeInTheDocument();
+    
+    const mergedFilterButtons = within(filterSection).getAllByText('Merged');
+    expect(mergedFilterButtons[0]).toBeInTheDocument();
     
     const projectSelect = screen.getByText('Project:');
     expect(projectSelect).toBeInTheDocument();
@@ -45,26 +49,30 @@ describe('MergeRequestList Component', () => {
   test('filter options toggle active class when clicked', () => {
     renderWithProviders(<MergeRequestList />);
     
-    const allFilter = screen.getByText('All');
-    const openFilter = screen.getByText('Open');
-    const mergedFilter = screen.getByText('Merged');
+    // Find the filter group section first
+    const filterSection = screen.getByText('Status:').closest('.filters');
+    
+    // Get filter buttons within this section
+    const allFilterButton = within(filterSection).getAllByText('All')[0];
+    const openFilterButton = within(filterSection).getAllByText('Open')[0];
+    const mergedFilterButton = within(filterSection).getAllByText('Merged')[0];
     
     // Initially all is active
-    expect(allFilter).toHaveClass('active');
-    expect(openFilter).not.toHaveClass('active');
-    expect(mergedFilter).not.toHaveClass('active');
+    expect(allFilterButton).toHaveClass('active');
+    expect(openFilterButton).not.toHaveClass('active');
+    expect(mergedFilterButton).not.toHaveClass('active');
     
     // Click open
-    fireEvent.click(openFilter);
-    expect(allFilter).not.toHaveClass('active');
-    expect(openFilter).toHaveClass('active');
-    expect(mergedFilter).not.toHaveClass('active');
+    fireEvent.click(openFilterButton);
+    expect(allFilterButton).not.toHaveClass('active');
+    expect(openFilterButton).toHaveClass('active');
+    expect(mergedFilterButton).not.toHaveClass('active');
     
     // Click merged
-    fireEvent.click(mergedFilter);
-    expect(allFilter).not.toHaveClass('active');
-    expect(openFilter).not.toHaveClass('active');
-    expect(mergedFilter).toHaveClass('active');
+    fireEvent.click(mergedFilterButton);
+    expect(allFilterButton).not.toHaveClass('active');
+    expect(openFilterButton).not.toHaveClass('active');
+    expect(mergedFilterButton).toHaveClass('active');
   });
   
   test('displays correct number of merge requests', () => {
@@ -83,21 +91,24 @@ describe('MergeRequestList Component', () => {
   test('filters merge requests by status', () => {
     renderWithProviders(<MergeRequestList />);
     
+    // Find the filter group section first
+    const filterSection = screen.getByText('Status:').closest('.filters');
+    
     // Initially shows all merge requests
     expect(screen.getByText('Add user profile settings page')).toBeInTheDocument();
     expect(screen.getByText('Implement caching for API responses')).toBeInTheDocument();
     
     // Filter by Open status
-    const openFilter = screen.getByText('Open');
-    fireEvent.click(openFilter);
+    const openFilterButton = within(filterSection).getAllByText('Open')[0];
+    fireEvent.click(openFilterButton);
     
     // Should still see open MRs but not merged ones
     expect(screen.getByText('Add user profile settings page')).toBeInTheDocument();
     expect(screen.queryByText('Implement caching for API responses')).not.toBeInTheDocument();
     
     // Filter by Merged status
-    const mergedFilter = screen.getByText('Merged');
-    fireEvent.click(mergedFilter);
+    const mergedFilterButton = within(filterSection).getAllByText('Merged')[0];
+    fireEvent.click(mergedFilterButton);
     
     // Should see merged MRs but not open ones
     expect(screen.queryByText('Add user profile settings page')).not.toBeInTheDocument();
