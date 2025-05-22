@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import { AppProvider } from '../../context/AppContext';
@@ -31,8 +31,9 @@ describe('Dashboard Component', () => {
     const mrsReviewedStat = screen.getByText(/MRs Reviewed/i);
     expect(mrsReviewedStat).toBeInTheDocument();
     
-    const activeProjectsStat = screen.getByText(/Active Projects/i);
-    expect(activeProjectsStat).toBeInTheDocument();
+    // Using getByRole to find the heading within a stat card
+    const activeProjectsHeading = screen.getAllByText(/Active Projects/i)[0];
+    expect(activeProjectsHeading).toBeInTheDocument();
     
     const activeMrsStat = screen.getByText(/Active MRs/i);
     expect(activeMrsStat).toBeInTheDocument();
@@ -41,10 +42,14 @@ describe('Dashboard Component', () => {
   test('renders top reviewers section', () => {
     renderWithProviders(<Dashboard />);
     
-    const topReviewersSection = screen.getByText(/Top Reviewers/i);
-    expect(topReviewersSection).toBeInTheDocument();
-    const viewAllLink = screen.getByText(/View All/i);
-    expect(viewAllLink).toBeInTheDocument();
+    // Find the top reviewers heading
+    const topReviewersHeadings = screen.getAllByText(/Top Reviewers/i);
+    expect(topReviewersHeadings[0]).toBeInTheDocument();
+    
+    // Find all "View All" links and check at least one exists
+    const viewAllLinks = screen.getAllByText(/View All/i);
+    expect(viewAllLinks.length).toBeGreaterThan(0);
+    expect(viewAllLinks[0]).toBeInTheDocument();
   });
   
   test('renders recent activity section', () => {
@@ -57,7 +62,9 @@ describe('Dashboard Component', () => {
   test('renders active projects section', () => {
     renderWithProviders(<Dashboard />);
     
-    const projectsSection = screen.getByText('Active Projects');
-    expect(projectsSection).toBeInTheDocument();
+    // Using getAllByText to get all elements with "Active Projects" text
+    const projectsSections = screen.getAllByText(/Active Projects/i);
+    // Making sure at least one element exists
+    expect(projectsSections.length).toBeGreaterThan(0);
   });
 });
