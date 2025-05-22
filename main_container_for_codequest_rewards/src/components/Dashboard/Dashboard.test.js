@@ -25,18 +25,18 @@ describe('Dashboard Component', () => {
   test('renders statistics cards', () => {
     renderWithProviders(<Dashboard />);
     
-    const bugsFoundStat = screen.getByText(/Total Bugs Found/i);
-    expect(bugsFoundStat).toBeInTheDocument();
+    // Using getAllByText for all texts that might appear multiple times
+    const bugsFoundStats = screen.getAllByText(/Total Bugs Found/i);
+    expect(bugsFoundStats[0]).toBeInTheDocument();
     
-    const mrsReviewedStat = screen.getByText(/MRs Reviewed/i);
-    expect(mrsReviewedStat).toBeInTheDocument();
+    const mrsReviewedStats = screen.getAllByText(/MRs Reviewed/i);
+    expect(mrsReviewedStats[0]).toBeInTheDocument();
     
-    // Using getByRole to find the heading within a stat card
-    const activeProjectsHeading = screen.getAllByText(/Active Projects/i)[0];
-    expect(activeProjectsHeading).toBeInTheDocument();
+    const activeProjectsHeadings = screen.getAllByText(/Active Projects/i);
+    expect(activeProjectsHeadings[0]).toBeInTheDocument();
     
-    const activeMrsStat = screen.getByText(/Active MRs/i);
-    expect(activeMrsStat).toBeInTheDocument();
+    const activeMrsStats = screen.getAllByText(/Active MRs/i);
+    expect(activeMrsStats[0]).toBeInTheDocument();
   });
   
   test('renders top reviewers section', () => {
