@@ -1,0 +1,296 @@
+.leaderboard-container {
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+.leaderboard-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.leaderboard-header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.leaderboard-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.leaderboard-filters {
+  margin-bottom: 24px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-group label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.filter-options {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-option {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-option:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.filter-option.active {
+  background-color: var(--kavia-orange);
+  color: white;
+}
+
+.full-leaderboard {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.leaderboard-table-header {
+  display: grid;
+  grid-template-columns: 80px 2fr 1fr 1fr 1.5fr 1fr;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 80px 2fr 1fr 1fr 1.5fr 1fr;
+  padding: 16px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
+  align-items: center;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-row:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.rank-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rank-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.rank-badge.top-1 {
+  background-color: #ffd700;
+  color: #333;
+}
+
+.rank-badge.top-2 {
+  background-color: #c0c0c0;
+  color: #333;
+}
+
+.rank-badge.top-3 {
+  background-color: #cd7f32;
+  color: #333;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.user-role {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.level-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.level-badge {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background-color: rgba(232, 122, 65, 0.2);
+  color: var(--kavia-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.level-title {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.bugs-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.bugs-found-number {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bugs-found-number::before {
+  content: "🐛";
+  font-size: 0.9rem;
+}
+
+.mrs-reviewed-number {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.achievements-cell {
+  display: flex;
+  align-items: center;
+}
+
+.achievement-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.achievement-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.no-achievements {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.points-cell {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 16px;
+}
+
+.points-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--kavia-orange);
+}
+
+@media screen and (max-width: 1024px) {
+  .leaderboard-table-header,
+  .leaderboard-row {
+    grid-template-columns: 60px 2fr 1fr 1fr 1fr;
+  }
+  
+  .achievements-cell {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .leaderboard-table-header,
+  .leaderboard-row {
+    grid-template-columns: 60px 2fr 0.5fr 1fr;
+  }
+  
+  .level-cell {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .leaderboard-table-header,
+  .leaderboard-row {
+    grid-template-columns: 50px 2fr 1fr;
+  }
+  
+  .bugs-cell {
+    display: none;
+  }
+  
+  .user-role {
+    display: none;
+  }
+}
